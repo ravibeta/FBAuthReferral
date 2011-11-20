@@ -1,0 +1,1 @@
+This project demonstrates Facebook Authentication Referral. Upon successful auth referral, a JSON about the user as received from FB is displayed.

@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<h2>@ViewBag.Message</h2>
+<p>
+    To learn more about ASP.NET MVC visit <a href="http://asp.net/mvc" title="ASP.NET MVC Website">http://asp.net/mvc</a>.
+</p>
+
+ <!DOCTYPE html>
+<html>
+     <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# profile: http://ogp.me/ns/profile#" >
+  <meta property="fb:app_id"      content="198552693558851" /> 
+  <meta property="og:type"        content="profile" /> 
+  <meta property="og:url"         content="http://localhost/" /> 
+  <meta property="og:title"       content="AboutMe JSON from Facebook" /> 
+  <meta property="og:description" content="AboutMe JSON from Facebook" /> 
+  <meta property="og:image"       content="http://ogp.me/logo.png" />
+  <!-- Full access token AAAC0lSbEzkMBABZC6XEb4DeJ7LHtl24hijC24yqVizBHZCZAtTZCUXMJnZCleIEztLh4lXrQZC9qVftmNBLxaBsPjMps443OreKy0ZBrfm87wZDZD -->
+      <title>FB Auth Referral</title>
+    </head>
+    <body>
+      <div id="fb-root"></div>
+      <script type="text/javascript" language="javascript">
+          function replacer(key, value) {
+              if (typeof value === 'number' && !isFinite(value)) {
+                  return String(value);
+              }
+              return value;
+          }
+          window.fbAsyncInit = function () {
+              FB.init({
+                  appId: '198552693558851',
+                  channelURL: 'http://localhost',
+                  status: true,
+                  cookie: true,
+                  xfbml: true,
+                  oauth: true
+              });
+              FB.Event.subscribe('auth.login', function () {
+                  top.location = window.location = "http://www.facebook.com/dialog/oauth/?scope=user_about_me&client_id=198552693558851&redirect_uri=http://localhost:50713/Home/Access&response_type=code";
+              });
+
+          };
+          (function (d) {
+              var js, id = 'facebook-jssdk'; if (d.getElementById(id)) { return; }
+              js = d.createElement('script'); js.id = id; js.async = true;
+              js.src = "//connect.facebook.net/en_US/all.js";
+              d.getElementsByTagName('head')[0].appendChild(js);
+          } (document));
+      </script>
+      <div class="fb-login-button" scope="user_about_me"  autologoutlink="true" >
+        Login with Facebook
+      </div>
+<br/>
+      <div id="user-info"></div>
+    </body>
+ </html>
