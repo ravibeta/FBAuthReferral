@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Net;
 using System.IO;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace FBAuthReferral2.Controllers
 {
@@ -42,14 +44,44 @@ namespace FBAuthReferral2.Controllers
                 }
                 var accessToken = responseStr.Contains("&") ? responseStr.Substring(responseStr.IndexOf("=") + 1, responseStr.IndexOf("&") - responseStr.IndexOf("=") - 1) :
                     responseStr.Substring(responseStr.IndexOf("=") + 1, responseStr.Length - responseStr.IndexOf("=") - 1);
-                var graphUrl = @"https://graph.facebook.com/me?access_token=" + accessToken;
+                var graphUrl = @"https://graph.facebook.com/me/checkins?access_token=" + accessToken;
                 var uri2 = new Uri(graphUrl);
                 WebRequest req2 = WebRequest.Create(uri2);
                 WebResponse resp2 = req2.GetResponse();
+                string zip = null;
                 using (var stream = resp2.GetResponseStream())
                 {
                     StreamReader sr = new StreamReader(stream);
                     responseStr = sr.ReadToEnd();
+                    zip = responseStr.Contains("zip") ? 
+                        responseStr.Substring(responseStr.IndexOf(@"zip"":""")+6, 5) : null;
+                }
+                if (zip != null)
+                {
+                    var bingUrl = @"http://api.bing.net/xml.aspx?Appid=27F556AEB7C7501091E5B878C273F7FE12AFA91D&query=Nordstrom%20<zip>&sources=web";
+                    bingUrl.Replace(@"<zip>", zip);
+                    WebRequest req3 = WebRequest.Create(bingUrl);
+                    WebResponse resp3 = req3.GetResponse();
+                    XmlReader xr = XmlReader.Create(resp3.GetResponseStream());
+                    XDocument xdoc = XDocument.Load(xr);
+                    var nodes = xdoc.Descendants(XName.Get("Results", "http://schemas.microsoft.com/LiveSearch/2008/04/XML/web")).Nodes();
+                    if (nodes.Count() > 0)
+                    {
+                        foreach (var node in nodes)
+                        {
+                            var desc = ((XElement)node).Element(XName.Get("Description", "http://schemas.microsoft.com/LiveSearch/2008/04/XML/web"));
+                            if (desc != null && string.IsNullOrEmpty(desc.Value) )
+                            {
+                                if (desc.Value.Contains(@"("))
+                                {
+                                    responseStr = @"Here's a Nordstrom store near you : " +
+                                        desc.Value;
+                                    break;
+                                }
+                            }
+                        }
+
+                    }
                 }
                 ViewBag.Message = responseStr;
             }
