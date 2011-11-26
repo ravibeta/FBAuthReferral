@@ -70,11 +70,11 @@ namespace FBAuthReferral2.Controllers
                         foreach (var node in nodes)
                         {
                             var desc = ((XElement)node).Element(XName.Get("Description", "http://schemas.microsoft.com/LiveSearch/2008/04/XML/web"));
-                            if (desc != null && string.IsNullOrEmpty(desc.Value) )
+                            if (desc != null && string.IsNullOrEmpty(desc.Value) == false )
                             {
                                 if (desc.Value.Contains(@"("))
                                 {
-                                    responseStr = @"Here's a Nordstrom store near you : " +
+                                    responseStr = @"There's a Nordstrom store near you, in case you are thinking about it : " +
                                         desc.Value;
                                     break;
                                 }
