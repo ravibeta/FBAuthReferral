@@ -48,13 +48,14 @@ namespace FBAuthReferral2.Controllers
                 var uri2 = new Uri(graphUrl);
                 WebRequest req2 = WebRequest.Create(uri2);
                 WebResponse resp2 = req2.GetResponse();
+                string checkins;
                 string zip = null;
                 using (var stream = resp2.GetResponseStream())
                 {
                     StreamReader sr = new StreamReader(stream);
-                    responseStr = sr.ReadToEnd();
-                    zip = responseStr.Contains("zip") ? 
-                        responseStr.Substring(responseStr.IndexOf(@"zip"":""")+6, 5) : null;
+                    checkins = sr.ReadToEnd();
+                    zip = checkins.Contains("zip") ? 
+                        checkins.Substring(responseStr.IndexOf(@"zip"":""")+6, 5) : null;
                 }
                 if (zip != null)
                 {
@@ -70,7 +71,7 @@ namespace FBAuthReferral2.Controllers
                         foreach (var node in nodes)
                         {
                             var desc = ((XElement)node).Element(XName.Get("Description", "http://schemas.microsoft.com/LiveSearch/2008/04/XML/web"));
-                            if (desc != null && string.IsNullOrEmpty(desc.Value) == false )
+                            if (desc != null && string.IsNullOrEmpty(desc.Value) == false)
                             {
                                 if (desc.Value.Contains(@"("))
                                 {
@@ -81,6 +82,18 @@ namespace FBAuthReferral2.Controllers
                             }
                         }
 
+                    }
+                }
+                else
+                {
+                    var graphUrl4 = @"https://graph.facebook.com/me?access_token=" + accessToken;
+                    var uri4 = new Uri(graphUrl4);
+                    WebRequest req4 = WebRequest.Create(uri4);
+                    WebResponse resp4 = req4.GetResponse();
+                    using (var stream = resp4.GetResponseStream())
+                    {
+                        StreamReader sr = new StreamReader(stream);
+                        responseStr = sr.ReadToEnd();
                     }
                 }
                 ViewBag.Message = responseStr;
