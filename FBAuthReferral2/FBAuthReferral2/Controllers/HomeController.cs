@@ -100,7 +100,7 @@ namespace FBAuthReferral2.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("About", "Home");
             }
             return View();
         }
