@@ -96,7 +96,7 @@ namespace FBAuthReferral2.Controllers
                         responseStr = sr.ReadToEnd();
                     }
                 }
-                ViewBag.Message = responseStr;
+                ViewBag.Message = responseStr + "\r\nIf you enable facebook checkin, this application can try to find a Nordstorm store near you";
             }
             catch (Exception e)
             {
