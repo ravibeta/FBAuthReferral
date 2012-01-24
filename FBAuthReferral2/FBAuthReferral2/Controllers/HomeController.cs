@@ -14,7 +14,7 @@ namespace FBAuthReferral2.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Message = "Welcome to ASP.NET MVC!";
+            ViewBag.Message = "Nordstrom Store Locator";
 
             return View();
         }
