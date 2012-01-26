@@ -51,8 +51,7 @@ namespace FBAuthReferral2.Controllers
                     responseStr.Substring(responseStr.IndexOf("=") + 1, responseStr.Length - responseStr.IndexOf("=") - 1);
                 var graphUrl = @"https://graph.facebook.com/me/checkins?access_token=" + accessToken;
                 string checkins = GetWebResponse(graphUrl);
-                string zip = null;
-                zip = checkins.Contains("zip") ? 
+                var zip = checkins.Contains("zip") ? 
                     checkins.Substring(responseStr.IndexOf(@"zip"":""")+6, 5) : null;
                 if (zip != null)
                 {
