@@ -71,7 +71,7 @@ namespace FBAuthReferral2.Controllers
                             {
                                 if (desc.Value.Contains(@"("))
                                 {
-                                    responseStr = @"There is a Nordstrom store near you : " +
+                                    responseStr = @"There is a Nordstrom store near you at : " +
                                         desc.Value;
                                     break;
                                 }
