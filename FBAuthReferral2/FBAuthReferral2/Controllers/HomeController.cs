@@ -85,7 +85,7 @@ namespace FBAuthReferral2.Controllers
                     var graphUrl4 = @"https://graph.facebook.com/me?access_token=" + accessToken;
                     responseStr = GetWebResponse(graphUrl4);
                 }
-                ViewBag.Message = responseStr + "\r\nWhen you enable facebook checkin, this application can try to find a Nordstorm store near you";
+                ViewBag.Message = responseStr + "\r\nWhen you enable facebook checkin feature, this application can try to find a Nordstorm store near you";
             }
             catch (Exception e)
             {
