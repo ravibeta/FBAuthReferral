@@ -1,30 +1,23 @@
 @{
-    ViewBag.Title = "Bellevue from Zillow";
+    
 }
-
-<h3>@ViewBag.Message</h3>
-
-
  <!DOCTYPE html>
 <html>
      <head >
-      <title>Zillow Locator</title>
-      <h5>using Zillow API for zip code based lookup</h5>
-      <br />
-      <br />
+      <title>Zillow lookup of my home</title>
     </head>
     <body>
       <div id="result"></div>
+    <form action="zillow">
+    <input id="locator" type="button" value="Use Zillow API to look up my home" onclick="show()">
+    <div />
+    </form>
       <script type="text/javascript" language="javascript">
+          function show() {
+              var api2 = "http://www.zillow.com/webservice/GetSearchResults.htm?zws-id=X1-ZWz1blqqdntn2j_59mre&address=17803+NE+34th+st&citystatezip=Redmond%2C+WA+98052"
+              window.open(api2);
+          }
+</script>
 
-$("locator").click(function(){
- var api = "http://www.zillow.com/webservice/GetSearchResults.htm?zws-id=X1-ZWz1blqqdntn2j_59mre&address=Bellevue+downtown+park&citystatezip=Bellevue%2C+WA"
-   $("result").load(api);
- }); 
-
-<FORM>
-<INPUT id="locator" TYPE="button" VALUE="Locate homes in Bellevue">
-<div />
-</FORM>
     </body>
  </html>
