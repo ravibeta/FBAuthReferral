@@ -9,14 +9,15 @@
     <body>
       <div id="result"></div>
     <form action="zillow">
-    <input id="locator" type="button" value="Use Zillow API to look up my home" onclick="show()">
+    <input id="locator" type="button" value="Use Zillow API to look up my home" >
     <div />
     </form>
+ <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
       <script type="text/javascript" language="javascript">
-          function show() {
+          $("input").click(function (event) {
               var api2 = "http://www.zillow.com/webservice/GetSearchResults.htm?zws-id=X1-ZWz1blqqdntn2j_59mre&address=17803+NE+34th+st&citystatezip=Redmond%2C+WA+98052"
               window.open(api2);
-          }
+          });
 </script>
 
     </body>
